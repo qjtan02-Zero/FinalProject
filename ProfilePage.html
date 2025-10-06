@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northgate College Library - Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+        }
+        
+        body {
+            padding-top: 70px;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white !important;
+        }
+        
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: #2c3e50 !important;
+        }
+        
+        .nav-profile-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem;
+            min-width: 220px;
+        }
+        
+        .dropdown-item {
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            margin: 2px 0;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .profile-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .profile-sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #eaeaea;
+            padding: 2rem 0;
+        }
+        
+        .profile-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .profile-nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: #6c757d;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .profile-nav-link:hover {
+            background-color: #e9ecef;
+            color: var(--primary-color);
+        }
+        
+        .profile-nav-link.active {
+            background-color: #e9ecef;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .profile-nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .profile-content {
+            padding: 2rem;
+        }
+        
+        .profile-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .profile-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .profile-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .profile-card {
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .profile-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1.5rem;
+            border: 3px solid var(--primary-color);
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+        
+        .profile-info h2 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .profile-info p {
+            margin: 0;
+            color: #6c757d;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 1rem;
+            }
+            
+            .profile-content {
+                padding: 1.5rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                Northgate College Library
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="MainPage.html"><i class="bi bi-house-fill me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-book-fill"></i>Catalog</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle nav-profile-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li class="px-3 py-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-circle me-2" style="font-size: 2rem; color: var(--primary-color);"></i>
+                                    <div>
+                                        <div class="fw-bold">User Profile</div>
+                                        <small class="text-muted">Complete your profile</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item active" href="#"><i class="bi bi-person-fill me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear-fill"></i>Settings</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark-fill"></i>My Books</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-door-closed-fill"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="row g-0">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+<ul class="profile-nav">
+    <li class="profile-nav-item">
+        <a href="ProfilePage.html" class="profile-nav-link active">
+            <i class="bi bi-person-fill"></i>
+            Profile
+        </a>
+    </li>
+    <li class="profile-nav-item">
+        <a href="SecurityPage.html" class="profile-nav-link">
+            <i class="bi bi-shield-lock"></i>
+            Security
+        </a>
+    </li>
+    <li class="profile-nav-item">
+        <a href="NotificationsPage.html" class="profile-nav-link">
+            <i class="bi bi-bell-fill"></i>
+            Notifications
+        </a>
+    </li>
+</ul>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="profile-content">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="bi bi-person-fill" style="font-size: 2rem;"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2>Your Profile</h2>
+                            <p>Complete your personal information</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Books Read</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <div class="stat-label">Books Borrowed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">Personal Information</h3>
+                        
+                        <div class="profile-card">
+                            <form id="profileForm" autocomplete="off">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" required pattern="^[A-Za-z\s]+$" maxlength="50" autocomplete="off">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" required pattern="^[A-Za-z\s]+$" maxlength="50" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter your email address" required autocomplete="off">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="09XXXXXXXXX" pattern="^09\d{9}$" maxlength="11" required autocomplete="off">
+                                    <div class="form-text text-muted">Format: 11 digits starting with 09</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">Bio</label>
+                                    <textarea class="form-control" id="bio" rows="3" placeholder="Tell us about yourself..." autocomplete="off"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save me-1"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="bi bi-check-circle me-2"></i>
+        <span id="notificationText">Profile updated successfully!</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("profileForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const phoneInput = document.getElementById("phone").value.trim();
+            const email = document.getElementById("email").value.trim();
+            
+            const namePattern = /^[A-Za-z\s]+$/;
+            const phonePattern = /^09\d{9}$/;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            // Validate first name
+            if (!namePattern.test(firstName)) {
+                showNotification("❌ Invalid first name. Only letters allowed.");
+                return;
+            }
+
+            // Validate last name
+            if (!namePattern.test(lastName)) {
+                showNotification("❌ Invalid last name. Only letters allowed.");
+                return;
+            }
+
+            // Validate email
+            if (!emailPattern.test(email)) {
+                showNotification("❌ Invalid email address.");
+                return;
+            }
+
+            // Validate phone number
+            if (!phonePattern.test(phoneInput)) {
+                showNotification("❌ Invalid phone number. Use format: 09XXXXXXXXX");
+                return;
+            }
+
+            showNotification("✅ Profile updated successfully!");
+        });
+                
+        function showNotification(message) {
+            const notification = document.getElementById("notification");
+            const notificationText = document.getElementById("notificationText");
+            
+            notificationText.textContent = message;
+            
+            notification.classList.add("show");
+            
+            setTimeout(() => {
+                notification.classList.remove("show");
+            }, 3000);
+        }
+        
+        document.querySelectorAll('.profile-nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.profile-nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
