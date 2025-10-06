@@ -7,36 +7,30 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
-        /* Simple Color Scheme */
         :root {
-            --primary: #2c3e50;    /* Dark blue-gray for main elements */
-            --secondary: #3498db;  /* Blue for accents */
-            --light: #ecf0f1;      /* Light gray for backgrounds */
-            --dark: #2c3e50;       /* Dark text */
-            --success: #27ae60;    /* Green for success states */
-            --border: #bdc3c7;     /* Light gray for borders */
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --border: #bdc3c7;
         }
-        
         body {
             padding-top: 70px;
             background-color: var(--light);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--dark);
         }
-        
-        /* Navigation - MATCHING PROFILE PAGE EXACTLY */
         .navbar {
             background-color: var(--primary) !important;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            height: 70px; /* Fixed height to prevent movement */
+            height: 70px;
         }
-        
         .navbar-brand,
         .navbar-nav .nav-link {
             color: white !important;
             text-decoration: none !important;
         }
-        
         .navbar-nav .nav-link {
             position: relative;
             margin: 0 0.25rem;
@@ -44,39 +38,31 @@
             border-radius: 4px;
             transition: all 0.2s ease;
         }
-        
         .navbar-nav .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.1);
             transform: translateY(-1px);
         }
-        
         .nav-profile-icon {
             font-size: 1.5rem;
             color: white;
         }
-        
         .dropdown-menu {
             border: none;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }
-        
         .dropdown-item {
             border-radius: 4px;
             margin: 2px 4px;
             text-decoration: none;
         }
-        
         .dropdown-item:hover {
             background-color: #f8f9fa;
         }
-        
         .dropdown-item.active {
             background-color: var(--secondary);
             color: white;
         }
-        
-        /* Profile Container - Using same class as Profile page */
         .profile-container {
             max-width: 1000px;
             margin: 2rem auto;
@@ -85,24 +71,19 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
-        /* Sidebar - Using same class as Profile page */
         .profile-sidebar {
             background-color: #f8f9fa;
             border-right: 1px solid var(--border);
             padding: 2rem 0;
         }
-        
         .profile-nav {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        
         .profile-nav-item {
             margin-bottom: 0.5rem;
         }
-        
         .profile-nav-link {
             display: flex;
             align-items: center;
@@ -112,14 +93,12 @@
             transition: all 0.2s ease;
             border-left: 4px solid transparent;
         }
-        
         .profile-nav-link:hover {
             background-color: #e9ecef;
             color: var(--primary);
             border-left-color: #bdc3c7;
             text-decoration: none;
         }
-        
         .profile-nav-link.active {
             background-color: white;
             color: var(--secondary);
@@ -128,25 +107,20 @@
             box-shadow: inset 0 0 0 1px #e9ecef;
             text-decoration: none;
         }
-        
         .profile-nav-link i {
             margin-right: 0.75rem;
             width: 20px;
             text-align: center;
             font-size: 1.1rem;
         }
-        
-        /* Content Area - Using same class as Profile page */
         .profile-content {
             padding: 2rem;
         }
-        
         .profile-section-title {
             color: var(--primary);
             border-bottom: 2px solid var(--secondary);
             padding-bottom: 0.5rem;
         }
-        
         .profile-card {
             background: white;
             border: 1px solid var(--border);
@@ -154,30 +128,22 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
-        
         .profile-card:last-child {
             margin-bottom: 0;
         }
-        
-        /* Buttons */
         .btn-primary {
             background-color: var(--secondary);
             border-color: var(--secondary);
             text-decoration: none;
         }
-        
         .btn-primary:hover {
             background-color: var(--primary);
             border-color: var(--primary);
         }
-        
-        /* Form Elements */
         .form-control:focus {
             border-color: var(--secondary);
             box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
         }
-        
-        /* Notification */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -192,32 +158,24 @@
             transition: transform 0.3s ease, opacity 0.3s ease;
             z-index: 1000;
         }
-        
         .notification.show {
             transform: translateY(0);
             opacity: 1;
         }
-        
-        /* Profile Header - Using same class as Profile page */
         .profile-avatar {
             border: 3px solid var(--secondary);
             background-color: var(--light);
         }
-        
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .profile-container {
                 margin: 1rem;
             }
-            
             .profile-content {
                 padding: 1.5rem;
             }
-            
             .profile-sidebar {
                 padding: 1.5rem 0;
             }
-            
             .navbar-nav .nav-link {
                 margin: 0.125rem 0;
             }
@@ -225,7 +183,6 @@
     </style>
 </head>
 <body>
-    <!-- NAVIGATION MATCHING PROFILE PAGE EXACTLY -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#" style="text-decoration: none;">
@@ -290,8 +247,6 @@
             </div>
         </div>
     </nav>
-
-    <!-- USING SAME CONTAINER STRUCTURE AS PROFILE PAGE -->
     <div class="profile-container">
         <div class="row g-0">
             <div class="col-md-3">
@@ -318,7 +273,6 @@
                     </ul>
                 </div>
             </div>
-            
             <div class="col-md-9">
                 <div class="profile-content">
                     <div class="profile-header d-flex align-items-center mb-4 pb-3 border-bottom">
@@ -330,10 +284,8 @@
                             <p class="mb-0 text-muted">Manage your account security</p>
                         </div>
                     </div>
-                    
                     <div class="profile-section">
                         <h3 class="profile-section-title fw-bold mb-3">Change Password</h3>
-                        
                         <div class="profile-card p-3">
                             <form id="changePasswordForm">
                                 <div class="mb-3">
@@ -359,20 +311,16 @@
             </div>
         </div>
     </div>
-
     <div class="notification" id="notification">
         <i class="bi bi-check-circle me-2"></i>
         <span id="notificationText">Operation completed successfully!</span>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script>
         document.getElementById("changePasswordForm").addEventListener("submit", function(e) {
             e.preventDefault();
             let newPass = document.getElementById("newPassword").value;
             let confirmPass = document.getElementById("confirmPassword").value;
-            
             if (newPass !== confirmPass) {
                 showNotification("Passwords do not match!", "error");
             } else {
@@ -380,26 +328,20 @@
                 document.getElementById("changePasswordForm").reset();
             }
         });
-        
         function showNotification(message, type = "success") {
             const notification = document.getElementById("notification");
             const notificationText = document.getElementById("notificationText");
-            
             notificationText.textContent = message;
-            
             if (type === "error") {
                 notification.style.backgroundColor = "#e74c3c";
             } else {
                 notification.style.backgroundColor = "var(--success)";
             }
-            
             notification.classList.add("show");
-            
             setTimeout(() => {
                 notification.classList.remove("show");
             }, 3000);
         }
-        
         document.querySelectorAll('.profile-nav-link').forEach(link => {
             link.addEventListener('click', function() {
                 document.querySelectorAll('.profile-nav-link').forEach(l => l.classList.remove('active'));
