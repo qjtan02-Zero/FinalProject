@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northgate College Library - Security Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+        }
+        
+        body {
+            padding-top: 70px;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white !important;
+        }
+        
+        .navbar-brand,
+        .navbar-nav .nav-link {
+            color: #2c3e50 !important;
+        }
+        
+        .nav-profile-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem;
+            min-width: 220px;
+        }
+        
+        .dropdown-item {
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            margin: 2px 0;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .dropdown-divider {
+            margin: 0.5rem 0;
+        }
+        
+        .dropdown-header {
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .settings-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .settings-sidebar {
+            background-color: #f8f9fa;
+            border-right: 1px solid #eaeaea;
+            padding: 2rem 0;
+        }
+        
+        .settings-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .settings-nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .settings-nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: #6c757d;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .settings-nav-link:hover {
+            background-color: #e9ecef;
+            color: var(--primary-color);
+        }
+        
+        .settings-nav-link.active {
+            background-color: #e9ecef;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .settings-nav-link i {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .settings-content {
+            padding: 2rem;
+        }
+        
+        .settings-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .settings-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .settings-card {
+            background: white;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .settings-card:last-child {
+            margin-bottom: 0;
+        }
+        
+        .settings-card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .settings-container {
+                margin: 1rem;
+            }
+            
+            .settings-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Northgate College Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="MainPage.html"><i class="bi bi-house-fill me-1"></i>Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-book-fill"></i>Catalog</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle nav-profile-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li class="px-3 py-2">
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-person-circle me-2" style="font-size: 2rem; color: var(--primary-color);"></i>
+                                    <div>
+                                        <div class="fw-bold">John Doe</div>
+                                        <small class="text-muted">john.doe@example.com</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><div class="dropdown-header">Account</div></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item active" href="#"><i class="bi bi-shield-lock me-2"></i>Security</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-bookmark-heart me-2"></i>My Books</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="settings-container">
+        <div class="row g-0">
+            <div class="col-md-3">
+                <div class="settings-sidebar">
+                    <ul class="settings-nav">
+                        <li class="settings-nav-item">
+                            <a href="ProfilePage.html" class="settings-nav-link">
+                                <i class="bi bi-person-fill"></i>
+                                Profile
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="SecurityPage.html" class="settings-nav-link active">
+                                <i class="bi bi-shield-lock"></i>
+                                Security
+                            </a>
+                        </li>
+                        <li class="settings-nav-item">
+                            <a href="#" class="settings-nav-link">
+                                <i class="bi bi-bell-fill"></i>
+                                Notifications
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="settings-content">
+                    <div class="settings-section">
+                        <h3 class="settings-section-title">Security Settings</h3>
+                        
+                        <div class="settings-card">
+                            <h5 class="settings-card-title">Change Password</h5>
+                            <form id="changePasswordForm">
+                                <div class="mb-3">
+                                    <label for="currentPassword" class="form-label">Current Password</label>
+                                    <input type="password" class="form-control" id="currentPassword" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="newPassword" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="newPassword" required>
+                                    <div class="form-text">Password must be at least 8 characters long and include uppercase, lowercase, and numbers.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-lock me-1"></i> Update Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle me-2"></i>
+        <span id="notificationText">Operation completed successfully!</span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.getElementById("changePasswordForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            let newPass = document.getElementById("newPassword").value;
+            let confirmPass = document.getElementById("confirmPassword").value;
+            
+            if (newPass !== confirmPass) {
+                showNotification("Passwords do not match!", "error");
+            } else {
+                showNotification("Password changed successfully!");
+                document.getElementById("changePasswordForm").reset();
+            }
+        });
+        
+        function showNotification(message, type = "success") {
+            const notification = document.getElementById("notification");
+            const notificationText = document.getElementById("notificationText");
+            
+            notificationText.textContent = message;
+            
+            if (type === "error") {
+                notification.style.backgroundColor = "var(--danger-color)";
+            } else {
+                notification.style.backgroundColor = "var(--success-color)";
+            }
+            
+            notification.classList.add("show");
+            
+            setTimeout(() => {
+                notification.classList.remove("show");
+            }, 3000);
+        }
+        
+document.querySelectorAll('.profile-nav-link').forEach(link => {
+    link.addEventListener('click', function() {
+        document.querySelectorAll('.profile-nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+    </script>
+</body>
+</html>
